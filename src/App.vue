@@ -2,8 +2,8 @@
   <div id="app">
     <Header/>
     <main>
-      <ControlPanel/>
-      <FileZone @editabled="edit" @saved="save" @canceled="cancel"/>
+      <ControlPanel @validAction="updateAction" @validStyle="udpateStyle"/>
+      <FileZone :validation="actionData" :style="styleData"/>
     </main>
   </div>
 </template>
@@ -19,6 +19,21 @@ export default {
     Header,
     ControlPanel,
     FileZone
+  },
+  data: function(){
+    return {
+      actionData: "",
+      styleData: ""
+    };
+  },
+  methods: {
+    updateAction(action){
+      alert('The variable: ' +  action);
+      this.actionData = action;
+    },
+    updateStyle(style){
+      this.styleData = style;
+    }
   }
 }
 </script>
