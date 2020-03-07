@@ -12,32 +12,33 @@
 </template>
 
 <script> 
-export default {
+    export default {
         name: "ControlPanel",
         data() {
-            /*== start Style array declaration ==*/
-            // 0. Bold | 1. Cursive | 2. Underline
-            style = [false, false, false];
-            /*==  end Style array declaration  ==*/
-
-            actions = [];
+            style = null;
+            actions = []
         },
         methods: {
-            getStyle: function(event){
-                if(event.currentTarget.id == 'bold'){
-                    this.style = this.style[0] ? false : true;
-                    this.$emit("validStyle", this.style);
+            getStyle (event){
+                this.style = {
+                    'bold':false, 
+                    'cursive':false, 
+                    'underline':false
+                };
+                if(event.currentTarget.id === 'bold'){
+                                    alert('getStyle : ' + this.style);
+                    this.style['bold'] = this.style['bold'] ? false : true;
                 }
-                else if(event.currentTarget.id == 'cursive'){
-                    this.style = this.style[1] ? false : true;
-                    this.$emit("validStyle", this.style);
+                else if(event.currentTarget.id === 'cursive'){
+                    this.style['cursive'] = this.style['cursive'] ? false : true;
                 }
-                else if(event.currentTarget.id == 'cursive'){
-                    this.style = this.style[2] ? false : true;
-                    this.$emit("validStyle", this.style);
+                else if(event.currentTarget.id === 'underline'){
+                    this.style['underline'] = this.style['underline'] ? false : true;
                 }
+                alert('getStyle : ' + this.style);
+                this.$emit("validStyle", this.style);
             },
-            getAction: function(event){
+            getAction (event){
                 if(event.currentTarget.id == 'edit'){
                     this.actions = [true, false, false];
                     this.$emit("validAction", this.actions);

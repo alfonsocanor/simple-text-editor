@@ -1,8 +1,14 @@
 <template>
    <div id="file-zone">
         <div id="file">
-            <textarea @select="selectEvent" v-model="message" @keypress="someHandler"/>
-            <div v-bind:style=" action ? messageStyle : qwe" v-html="message2" v-bind:class="{ active: isActive }">
+            <textarea @select="selectEvent" 
+                v-model="message" 
+                @keypress="someHandler" 
+                v-on:keydown.delete="someHandler"/>
+            <div v-bind:style=" action ? messageStyle : qwe" 
+                v-html="message2" 
+                v-bind:class="{ cursive: isActive }"
+            >
                 {{ message2 }}
             </div>
             <div >
@@ -20,7 +26,7 @@
                 type: Array
             },
             style: {
-                type: Array
+                type: Object
             }
         },
         data() {
@@ -28,7 +34,7 @@
                 /* start values binded from ControlPanel */
                 validations: [],
                 isActive: true,
-                styles: [],
+                styles: null,
                 /* end values binded from ControlPanel */
                 message: '',
                 message2: '',
@@ -42,25 +48,25 @@
             }
         },
         methods:{
+            testM: function(e){
+                alert(e.key);
+            },
             someHandler: function(e){
+                if(e.key === 'Backspace'){
+                    alert('in ' + this.message);
+                    this.message2 = this.message.slice(0,-1);
+                    return;
+                }
                 var helper = '';
                 var helper2 = '';
                 var totalHelper = '';
-                //alert('message out: ' + this.message);
                 if(this.message != ''){
                     if(this.message.split('').length == 1){
-                        //alert('message in if: ' + this.message);
                         this.message2 = this.message2 + '<span class="bold">' + e.key + '</span>';
                     }
-                    else{
-                        /*alert('message in else: ' + this.message 
-                            +' message2 in else: ' + this.message2
-                            +' totalHelper in else: ' + totalHelper
-                            +' splitted: ' + this.message.split(''));*/
-                        
+                    else{   
                         this.message2 = this.message.split('').reduce((total, letter)=>{
                             totalHelper = totalHelper == '' ? '<span class="bold">' + total + '</span>': totalHelper;
-                            //alert('reduce letter: ' + letter + ' total: ' + total + 'tHelper: ' + totalHelper);
                             totalHelper = totalHelper + '<span class="bold">' + letter + '</span>';
                             return total + letter;
                         });
@@ -77,6 +83,7 @@
                     e.target.value.substring(
                         e.target.selectionStart, e.target.selectionEnd
                 ));
+                this.message2 = this.message;
             },
             getBold: function(text, apply){
                 /*if(apply){
@@ -103,9 +110,7 @@
             },
 
             style: function(){
-                if(this.style[0]){
-
-                }
+                alert(this.styles + ' OR ' + this.style);
             }
         }
         
@@ -132,6 +137,10 @@
     }
 
     .bold {
-        color: green !important;
+        font-weight: bold;
+    }
+    
+    .cursive{
+        font-style: italic;
     }
 </style>

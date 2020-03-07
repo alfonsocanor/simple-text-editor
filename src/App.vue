@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <main>
-      <ControlPanel @validAction="updateAction" @validStyle="udpateStyle"/>
+      <ControlPanel @validAction="updateAction" @validStyle="updateStyle"/>
       <FileZone :validation="actionData" :style="styleData"/>
     </main>
   </div>
@@ -32,6 +32,7 @@ export default {
       this.actionData = action;
     },
     updateStyle(style){
+      alert('The variable: ' +  style);
       this.styleData = style;
     }
   }
