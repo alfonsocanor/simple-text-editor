@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "run": "^1.4.0",
-    "vue": "^2.6.11"
+    "vue": "^2.4.4"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.13",
@@ -44,7 +44,7 @@
     "vue-loader": "^13.7.3",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
+    "webpack": "^3.12.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.2.2"
