@@ -1,18 +1,8 @@
 <template>
    <div id="file-zone">
         <div id="file">
-            <textarea @select="selectEvent" 
-                v-model="message" 
-                @keypress="someHandler" 
-                v-on:keydown.delete="someHandler"/>
-            <div v-bind:style=" action ? messageStyle : qwe" 
-                v-html="message2" 
-                v-bind:class="{ cursive: isActive }"
-            >
-                {{ message2 }}
-            </div>
-            <div >
-                <span class="bold">test</span>
+            <div ref="myId" :contenteditable="action" v-bind:style=" action ? messageStyle : ''">
+                {{ message }}
             </div>
         </div>
     </div>
@@ -23,10 +13,7 @@
         name: "FileZone",
         props: {
             validation: {
-                type: Array
-            },
-            style: {
-                type: Object
+                type: String
             }
         },
         data() {
@@ -34,89 +21,40 @@
                 /* start values binded from ControlPanel */
                 validations: [],
                 isActive: true,
-                styles: null,
                 /* end values binded from ControlPanel */
                 message: '',
-                message2: '',
                 messageBeforeEdit: '', //Keep the text before Edit if the user uses Cancel action
                 action: false,
                 messageStyle: {
-                    border: '1px solid red',
-                    margin: '8px',
-                    padding: '8px'  
+                    border: '1px solid grey',
+                    padding: '8px',
+                    height: '100% !important'
                 }
             }
         },
         methods:{
-            testM: function(e){
-                alert(e.key);
-            },
-            someHandler: function(e){
-                if(e.key === 'Backspace'){
-                    alert('in ' + this.message);
-                    this.message2 = this.message.slice(0,-1);
-                    return;
-                }
-                var helper = '';
-                var helper2 = '';
-                var totalHelper = '';
-                if(this.message != ''){
-                    if(this.message.split('').length == 1){
-                        this.message2 = this.message2 + '<span class="bold">' + e.key + '</span>';
-                    }
-                    else{   
-                        this.message2 = this.message.split('').reduce((total, letter)=>{
-                            totalHelper = totalHelper == '' ? '<span class="bold">' + total + '</span>': totalHelper;
-                            totalHelper = totalHelper + '<span class="bold">' + letter + '</span>';
-                            return total + letter;
-                        });
-                        this.message2 = totalHelper + '<span class="bold">' + e.key + '</span>';
-                    }
-                }
-                else{
-                    //alert(e.key + ' message else: ' + this.message);
-                    this.message2 = '<span class="bold">' + e.key + '</span>';
-                }
-            },
-            selectEvent: function(e){
-                alert(
-                    e.target.value.substring(
-                        e.target.selectionStart, e.target.selectionEnd
-                ));
-                this.message2 = this.message;
-            },
-            getBold: function(text, apply){
-                /*if(apply){
-                    return '<div class="bold">' + text + '</div>'
-                }
-                return */
+            saveMessageBeforeEdit: function(){
+                this.messageBeforeEdit = this.$refs.myId.innerText;
             }
         },
         watch: {
             validation: function(){
-                alert(this.validation);
                 this.validations = this.validation;
                 if(this.validations[0] && !this.validations[1] && !this.validations[2]){
                     this.action = true;
-                    this.messageBeforeEdit = this.message;
+                    this.saveMessageBeforeEdit();
                 }
                 if(this.validations[1] && !this.validations[2] && !this.validations[0]){
                     this.action = false;
-                }
-                if(this.validations[2] && !this.validations[1] && !this.validations[0]){
-                    this.action = false;
                     this.message = this.messageBeforeEdit;
                 }
-            },
-
-            style: function(){
-                alert(this.styles + ' OR ' + this.style);
+                if(this.validations[2] && !this.validations[1] && !this.validations[0]){                    
+                    this.$refs.myId.innerText = this.messageBeforeEdit;
+                    this.action = false;
+                }
             }
-        }
-        
+        }    
     };
-
-
 </script>
 
 <style scoped>
@@ -130,17 +68,11 @@
     }
 
     #file {
+        padding: 16px;
         width: 600px;
         flex-grow: 1;
         background-color: #fff;
         border: 1px solid #e4dede;
-    }
-
-    .bold {
-        font-weight: bold;
-    }
-    
-    .cursive{
-        font-style: italic;
+        font-family: medium-content-serif-font,Georgia,Cambria,Times New Roman,Times,serif;
     }
 </style>

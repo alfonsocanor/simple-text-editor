@@ -2,8 +2,8 @@
   <div id="app">
     <Header/>
     <main>
-      <ControlPanel @validAction="updateAction" @validStyle="updateStyle"/>
-      <FileZone :validation="actionData" :style="styleData"/>
+      <ControlPanel @validAction="updateAction"/>
+      <FileZone :validation="actionData"/>
     </main>
   </div>
 </template>
@@ -22,18 +22,12 @@ export default {
   },
   data: function(){
     return {
-      actionData: "",
-      styleData: ""
+      actionData: ""
     };
   },
   methods: {
     updateAction(action){
-      alert('The variable: ' +  action);
       this.actionData = action;
-    },
-    updateStyle(style){
-      alert('The variable: ' +  style);
-      this.styleData = style;
     }
   }
 }
