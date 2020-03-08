@@ -1,4 +1,12 @@
-# Simple Text Editor skeleton
+# Welcome to Vue: Simple-Text-Editor 
+
+It was built with Vue.js framework. 
+
+The blueprint (Architecture) of the project was provided by an agency with no functionality.
+
+In general binding variables throught the architecture was used to send property values between components using Vue.app as parent.
+
+Pure javascript was used for styling the text.
 
 ## Build Setup
 

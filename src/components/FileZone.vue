@@ -1,8 +1,7 @@
 <template>
    <div id="file-zone">
         <div id="file">
-            <textarea @select="selectEvent" v-model="message"/>
-            <div v-bind:style=" action ? messageStyle : qwe">
+            <div ref="myId" :contenteditable="action" v-bind:style=" action ? messageStyle : ''">
                 {{ message }}
             </div>
         </div>
@@ -12,43 +11,68 @@
 <script>
     export default {
         name: "FileZone",
+        props: {
+            validation: {
+                type: String
+            }
+        },
         data() {
             return {
+                /* start values binded from ControlPanel */
+                validations: [],
+                isActive: true,
+                /* end values binded from ControlPanel */
                 message: '',
-                action: true,
+                messageBeforeEdit: '', //Keep the text before Edit if the user uses Cancel action
+                action: false,
                 messageStyle: {
-                    border: '1px solid red',
-                    margin: '8px',
-                    padding: '8px'  
+                    border: '1px solid grey',
+                    padding: '8px',
+                    height: '100% !important'
                 }
             }
         },
         methods:{
-            selectEvent: function(e){
-                alert(
-                    e.target.value.substring(e.target.selectionStart, e.target.selectionEnd));
+            saveMessageBeforeEdit: function(){
+                this.messageBeforeEdit = this.$refs.myId.innerText;
             }
-        }
-        
+        },
+        watch: {
+            validation: function(){
+                this.validations = this.validation;
+                if(this.validations[0] && !this.validations[1] && !this.validations[2]){
+                    this.action = true;
+                    this.saveMessageBeforeEdit();
+                }
+                if(this.validations[1] && !this.validations[2] && !this.validations[0]){
+                    this.action = false;
+                    this.message = this.messageBeforeEdit;
+                }
+                if(this.validations[2] && !this.validations[1] && !this.validations[0]){                    
+                    this.$refs.myId.innerText = this.messageBeforeEdit;
+                    this.action = false;
+                }
+            }
+        }    
     };
-
-
 </script>
 
 <style scoped>
     #file-zone {
-    background-color:#f1f0f0;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5px;
-}
+        background-color:#f1f0f0;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+    }
 
     #file {
+        padding: 16px;
         width: 600px;
         flex-grow: 1;
         background-color: #fff;
         border: 1px solid #e4dede;
+        font-family: medium-content-serif-font,Georgia,Cambria,Times New Roman,Times,serif;
     }
 </style>

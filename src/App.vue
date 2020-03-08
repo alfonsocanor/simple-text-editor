@@ -2,8 +2,8 @@
   <div id="app">
     <Header/>
     <main>
-      <ControlPanel/>
-      <FileZone @editabled="edit" @saved="save" @canceled="cancel"/>
+      <ControlPanel @validAction="updateAction"/>
+      <FileZone :validation="actionData"/>
     </main>
   </div>
 </template>
@@ -19,6 +19,16 @@ export default {
     Header,
     ControlPanel,
     FileZone
+  },
+  data: function(){
+    return {
+      actionData: ""
+    };
+  },
+  methods: {
+    updateAction(action){
+      this.actionData = action;
+    }
   }
 }
 </script>
