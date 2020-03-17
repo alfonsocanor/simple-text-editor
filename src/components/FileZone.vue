@@ -58,6 +58,7 @@
 </script>
 
 <style scoped>
+    @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
     #file-zone {
         background-color:#f1f0f0;
         flex-grow: 1;
@@ -73,6 +74,6 @@
         flex-grow: 1;
         background-color: #fff;
         border: 1px solid #e4dede;
-        font-family: medium-content-serif-font,Georgia,Cambria,Times New Roman,Times,serif;
+        font-family: 'Roboto', sans-serif;
     }
 </style>

@@ -2,9 +2,9 @@
    <div id="control-panel">
         <div id="format-actions">
             <div class="spaces">
-                <button id="bold"  className="format-action" type="button" v-on:click="getStyle"><b>B</b></button>
-                <button id="cursive" className="format-action" type="button" v-on:click="getStyle"><i>I</i></button>
-                <button id="underline" className="format-action" type="button" v-on:click="getStyle"><u>U</u></button>
+                <button class="styleAction" id="bold"  className="format-action" type="button" v-on:click="getStyle"><b>B</b></button>
+                <button class="styleAction" id="cursive" className="format-action" type="button" v-on:click="getStyle"><i>I</i></button>
+                <button class="styleAction" id="underline" className="format-action" type="button" v-on:click="getStyle"><u>U</u></button>
                 <select v-model="fontSize" v-on:change="getStyle">
                         <option value="" disabled selected>font size</option>
                         <option v-for="item in items" v-bind:key="item.value" >
@@ -13,9 +13,9 @@
                 </select>
             </div>
             <div class="spaces">
-                <button id="edit" class="testName" className="format-action" type="button" v-on:click="getAction"><u>Edit</u></button>
-                <button id="save" className="format-action" type="button" v-on:click="getAction"><u>Save</u></button>
-                <button id="cancel" className="format-action" type="button" v-on:click="getAction"><u>Cancel</u></button>
+                <button class="actionEditing" id="edit" className="format-action" type="button" v-on:click="getAction"><u>Edit</u></button>
+                <button class="actionEditing" v-if="actions[0]" id="save" className="format-action" type="button" v-on:click="getAction"><u>Save</u></button>
+                <button class="actionEditing" v-if="actions[0]" id="cancel" className="format-action" type="button" v-on:click="getAction"><u>Cancel</u></button>
             </div>
         </div>
     </div>
@@ -93,9 +93,18 @@
     #format-actions {
         width: 100%;   
         text-align:center;
+        position: relative;
+        top: -8px;
     }
     .spaces{
-        margin: 10px 0;
+        margin: 10px 0; 
         position: relative;
+    }
+    .styleAction{
+        width: 26px;
+        height: 28px;
+    }
+    .actionEditing{
+        height:28px;
     }
 </style>
